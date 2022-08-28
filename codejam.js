@@ -58,7 +58,6 @@ const ancientsData = [
     {
         id: 'azathoth',
         name: 'azathoth',
-        //cardFace: ancients.azathoth,
         firstStage: {
             greenCards: 1,
             brownCards: 2,
@@ -388,16 +387,6 @@ const cardsDataBlue = [
         color: 'blue'
     },
 ]
-//console.log(cardsDataBlue[0].cardFace);
-
-
-const shuffleArray = (array) => {
-    return array.sort(() => 0.5 - Math.random());
-}
-
-const greenArrayShuffled = shuffleArray(cardsDataGreen);
-const brownArrayShuffled = shuffleArray(cardsDataBrown);
-const blueArrayShuffled = shuffleArray(cardsDataBlue);
 
 const n1Green = ancientsData[0].firstStage.greenCards;
 const n1Brown = ancientsData[0].firstStage.brownCards;
@@ -409,6 +398,14 @@ const n3Green = n2Green + ancientsData[0].thirdStage.greenCards;
 const n3Brown = n2Brown + ancientsData[0].thirdStage.brownCards;
 const n3Blue = n2Blue + ancientsData[0].thirdStage.blueCards;
 
+const shuffleArray = (array) => {
+    return array.sort(() => 0.5 - Math.random());
+};
+
+const greenArrayShuffled = shuffleArray(cardsDataGreen);
+const brownArrayShuffled = shuffleArray(cardsDataBrown);
+const blueArrayShuffled = shuffleArray(cardsDataBlue);
+
 const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
 const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
 const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
@@ -419,25 +416,26 @@ const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2Blue);
 const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
 const finalDeckGreenThree = greenArrayShuffled.slice(n2Green, n3Green);
 const finalDeckBrownThree = brownArrayShuffled.slice(n2Brown, n3Brown);
-const finalDeckBlueThree= blueArrayShuffled.slice(n2Blue, n3Blue);
+const finalDeckBlueThree = blueArrayShuffled.slice(n2Blue, n3Blue);
 const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
 const finalDeck = [...finalDeckOne, ...finalDeckTwo, ...finalDeckThree];
+
 console.log(finalDeck);
-console.log(finalDeck[15].cardFace);
-
-
-
-//console.log((shuffleArray(cardsDataBlue))[0]);
 
 let deckImgNumber = 0;
 const setCardBg = () => {
     lastCard.style.backgroundSize = 'cover';
     lastCard.style.backgroundImage = `url(${(finalDeck[deckImgNumber].cardFace)})`;
-
 }
 setCardBg();
+
 const showNextCard = () => {
-deckImgNumber++;
-setCardBg();
+    if (deckImgNumber < finalDeck.length - 1) {
+        deckImgNumber++
+    } else {
+        lastCard.style.backgroundImage = `url(${(finalDeck[deckImgNumber].cardFace)})`;
+        //deck.style.backgroundImage = 'none';
+    }
+    setCardBg();
 };
 deck.addEventListener('click', showNextCard);
