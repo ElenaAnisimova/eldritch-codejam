@@ -16,44 +16,6 @@ const shuffleButton = document.querySelector('.shuffle-button');
 const deck = document.querySelector('.deck');
 const lastCard = document.querySelector('.last-card');
 
-const removeClassAnicents = () => {
-    for (let item of allAncientCards) {
-        item.classList.remove('active-ancient')
-    }
-};
-
-const chooseAncient = (e) => {
-    e.target.classList.add('active-ancient')
-};
-
-const showDifficulties = () => {
-    difficultyButtonsContainer.classList.remove('not-active');
-}
-
-ancientsCardsContainer.addEventListener('click', removeClassAnicents,);
-ancientsCardsContainer.addEventListener('click', chooseAncient);
-ancientsCardsContainer.addEventListener('click', showDifficulties);
-
-
-const removeClassDifficulty = () => {
-    for (let item of allDifficultiesButtons) {
-        item.classList.remove('difficulty-active')
-    }
-};
-
-const chooseDifficulty = (e) => {
-    e.target.classList.add('difficulty-active')
-};
-
-difficultyButtonsContainer.addEventListener('click', removeClassDifficulty,);
-difficultyButtonsContainer.addEventListener('click', chooseDifficulty);
-difficultyButtonsContainer.addEventListener('click', () => { shuffleButton.classList.remove('not-active-display-none') });
-difficultyButtonsContainer.addEventListener('click', () => { rightPart.classList.add('not-active-display-none') });
-
-shuffleButton.addEventListener('click', () => { rightPart.classList.remove('not-active-display-none') });
-shuffleButton.addEventListener('click', () => { shuffleButton.classList.add('not-active-display-none') });
-
-
 const ancientsData = [
     {
         id: 'azathoth',
@@ -386,7 +348,43 @@ const cardsDataBlue = [
         difficulty: 'normal',
         color: 'blue'
     },
-]
+];
+
+const removeClassAnicents = () => {
+    for (let item of allAncientCards) {
+        item.classList.remove('active-ancient')
+    }
+};
+
+const chooseAncient = (e) => {
+    e.target.classList.add('active-ancient')
+};
+
+const showDifficulties = () => {
+    difficultyButtonsContainer.classList.remove('not-active');
+}
+
+ancientsCardsContainer.addEventListener('click', removeClassAnicents,);
+ancientsCardsContainer.addEventListener('click', chooseAncient);
+ancientsCardsContainer.addEventListener('click', showDifficulties);
+
+
+const removeClassDifficulty = () => {
+    for (let item of allDifficultiesButtons) {
+        item.classList.remove('difficulty-active')
+    }
+};
+
+const chooseDifficulty = (e) => {
+    e.target.classList.add('difficulty-active')
+};
+
+difficultyButtonsContainer.addEventListener('click', removeClassDifficulty,);
+difficultyButtonsContainer.addEventListener('click', chooseDifficulty);
+difficultyButtonsContainer.addEventListener('click', () => { shuffleButton.classList.remove('not-active-display-none') });
+difficultyButtonsContainer.addEventListener('click', () => { rightPart.classList.add('not-active-display-none') });
+shuffleButton.addEventListener('click', () => { rightPart.classList.remove('not-active-display-none') });
+shuffleButton.addEventListener('click', () => { shuffleButton.classList.add('not-active-display-none') });
 
 const n1Green = ancientsData[0].firstStage.greenCards;
 const n1Brown = ancientsData[0].firstStage.brownCards;
@@ -402,9 +400,12 @@ const shuffleArray = (array) => {
     return array.sort(() => 0.5 - Math.random());
 };
 
+
 const greenArrayShuffled = shuffleArray(cardsDataGreen);
 const brownArrayShuffled = shuffleArray(cardsDataBrown);
 const blueArrayShuffled = shuffleArray(cardsDataBlue);
+
+
 
 const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
 const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
@@ -438,4 +439,6 @@ const showNextCard = () => {
     }
     setCardBg();
 };
+
+
 deck.addEventListener('click', showNextCard);

@@ -153,10 +153,11 @@ body {
     background-size: cover;
     height: 190px;
     width: 130px;
+    cursor: pointer;
 }
 
 .last-card {
-
+    cursor: pointer;
     height: 190px;
     width: 130px;
 }
