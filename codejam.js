@@ -1,4 +1,3 @@
-
 const azathoth = document.querySelector('.azathoth');
 const cthulthu = document.querySelector('.cthulthu');
 const iogSothoth = document.querySelector('.iogSothoth');
@@ -15,6 +14,22 @@ const rightPart = document.querySelector('.right-part');
 const shuffleButton = document.querySelector('.shuffle-button');
 const deck = document.querySelector('.deck');
 const lastCard = document.querySelector('.last-card');
+
+const dotGreenOne = document.querySelector('.dot-green-one');
+const dotBrownOne = document.querySelector('.dot-brown-one');
+const dotBlueOne = document.querySelector('.dot-blue-one');
+
+const dotGreenTwo = document.querySelector('.dot-green-two');
+const dotBrownTwo = document.querySelector('.dot-brown-two');
+const dotBlueTwo = document.querySelector('.dot-blue-two');
+
+const dotGreenThree = document.querySelector('.dot-green-three');
+const dotBrownThree = document.querySelector('.dot-brown-three');
+const dotBlueThree = document.querySelector('.dot-blue-three');
+
+const stageTextOne = document.querySelector('.stage-text-one');
+const stageTextTwo = document.querySelector('.stage-text-two');
+const stageTextThree = document.querySelector('.stage-text-three');
 
 const ancientsData = [
     {
@@ -36,6 +51,7 @@ const ancientsData = [
             blueCards: 0,
         },
     },]
+
 const cardsDataGreen = [
     {
         id: 'green1',
@@ -400,45 +416,126 @@ const shuffleArray = (array) => {
     return array.sort(() => 0.5 - Math.random());
 };
 
-
 const greenArrayShuffled = shuffleArray(cardsDataGreen);
 const brownArrayShuffled = shuffleArray(cardsDataBrown);
 const blueArrayShuffled = shuffleArray(cardsDataBlue);
-
 
 
 const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
 const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
 const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
 const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
+const finalDeckOneShuffled = shuffleArray(finalDeckOne);
 const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2Green);
 const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2Brown);
 const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2Blue);
 const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
+const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
 const finalDeckGreenThree = greenArrayShuffled.slice(n2Green, n3Green);
 const finalDeckBrownThree = brownArrayShuffled.slice(n2Brown, n3Brown);
 const finalDeckBlueThree = blueArrayShuffled.slice(n2Blue, n3Blue);
 const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
-const finalDeck = [...finalDeckOne, ...finalDeckTwo, ...finalDeckThree];
+const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
+const finalDeck = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
 
-console.log(finalDeck);
 
-let deckImgNumber = 0;
+let deckImgNumber = -1;
 const setCardBg = () => {
     lastCard.style.backgroundSize = 'cover';
     lastCard.style.backgroundImage = `url(${(finalDeck[deckImgNumber].cardFace)})`;
 }
-setCardBg();
 
 const showNextCard = () => {
     if (deckImgNumber < finalDeck.length - 1) {
         deckImgNumber++
     } else {
         lastCard.style.backgroundImage = `url(${(finalDeck[deckImgNumber].cardFace)})`;
-        //deck.style.backgroundImage = 'none';
     }
     setCardBg();
 };
 
+let textContentGreenOne = n1Green;
+let textContentBrownOne = n1Brown;
+let textContentBlueOne = n1Blue;
+let textContentGreenTwo = n2Green - n1Green;
+let textContentBrownTwo = n2Brown - n1Brown;
+let textContentBlueTwo = n2Blue - n1Blue;
+let textContentGreenThree = n3Green - n2Green;
+let textContentBrownThree = n3Brown - n2Brown;
+let textContentBlueThree = n3Blue - n2Blue;
+
+const setCardTracker = () => {
+    dotGreenOne.textContent = textContentGreenOne;
+    dotBrownOne.textContent = textContentBrownOne;
+    dotBlueOne.textContent = textContentBlueOne;
+    dotGreenTwo.textContent = textContentGreenTwo;
+    dotBrownTwo.textContent = textContentBrownTwo;
+    dotBlueTwo.textContent = textContentBlueTwo;
+    dotGreenThree.textContent = textContentGreenThree;
+    dotBrownThree.textContent = textContentBrownThree;
+    dotBlueThree.textContent = textContentBlueThree;
+};
+
+setCardTracker();
+
+const stageOneTextDone = () => {
+    if (textContentGreenOne === 0 && textContentBrownOne === 0 && textContentBlueOne === 0) {
+        stageTextOne.classList.add('stage-text-done')
+    }
+};
+const stageTwoTextDone = () => {
+    if (textContentGreenTwo === 0 && textContentBrownTwo === 0 && textContentBlueTwo === 0) {
+        stageTextTwo.classList.add('stage-text-done')
+    }
+};
+const stageThreeTextDone = () => {
+    if (textContentGreenThree === 0 && textContentBrownThree === 0 && textContentBlueThree === 0) {
+        stageTextThree.classList.add('stage-text-done');
+
+    }
+};
+
+const lastCardShow = () => {
+    if (deckImgNumber === (finalDeck.length - 1)) {
+        deck.classList.add('not-active')
+    }
+}
+
+const changeCardTracker = () => {
+
+    if (deckImgNumber < finalDeckOneShuffled.length) {
+        if (finalDeck[deckImgNumber].color === 'green') {
+            textContentGreenOne--
+        } else if (finalDeck[deckImgNumber].color === 'brown') {
+            textContentBrownOne--
+        } else if (finalDeck[deckImgNumber].color === 'blue') {
+            textContentBlueOne--
+        }
+    } else if (deckImgNumber < (finalDeckOneShuffled.length + finalDeckTwoShuffled.length)) {
+        if (finalDeck[deckImgNumber].color === 'green') {
+            textContentGreenTwo--
+        } else if (finalDeck[deckImgNumber].color === 'brown') {
+            textContentBrownTwo--
+        } else if (finalDeck[deckImgNumber].color === 'blue') {
+            textContentBlueTwo--
+        }
+    } else if
+        (deckImgNumber < (finalDeckOneShuffled.length + finalDeckTwoShuffled.length + finalDeckThreeShuffled.length)) {
+        if (finalDeck[deckImgNumber].color === 'green') {
+            textContentGreenThree--
+        } else if (finalDeck[deckImgNumber].color === 'brown') {
+            textContentBrownThree--
+        } else if (finalDeck[deckImgNumber].color === 'blue') {
+            textContentBlueThree--
+        }
+    }
+    setCardTracker();
+    stageOneTextDone();
+    stageTwoTextDone();
+    stageThreeTextDone();
+    lastCardShow();
+};
 
 deck.addEventListener('click', showNextCard);
+deck.addEventListener('click', changeCardTracker);
+console.log(finalDeck);
