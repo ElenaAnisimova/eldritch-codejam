@@ -50,6 +50,63 @@ const ancientsData = [
             brownCards: 4,
             blueCards: 0,
         },
+    },
+    {
+        id: 'cthulhu',
+        name: 'cthulhu',
+        firstStage: {
+            greenCards: 0,
+            brownCards: 2,
+            blueCards: 2,
+        },
+        secondStage: {
+            greenCards: 1,
+            brownCards: 3,
+            blueCards: 0,
+        },
+        thirdStage: {
+            greenCards: 3,
+            brownCards: 4,
+            blueCards: 0,
+        },
+    },
+    {
+        id: 'iogSothoth',
+        name: 'iogSothoth',
+        firstStage: {
+            greenCards: 0,
+            brownCards: 2,
+            blueCards: 1,
+        },
+        secondStage: {
+            greenCards: 2,
+            brownCards: 3,
+            blueCards: 1,
+        },
+        thirdStage: {
+            greenCards: 3,
+            brownCards: 4,
+            blueCards: 0,
+        },
+    },
+    {
+        id: 'shubNiggurath',
+        name: 'shubNiggurath',
+        firstStage: {
+            greenCards: 1,
+            brownCards: 2,
+            blueCards: 1,
+        },
+        secondStage: {
+            greenCards: 3,
+            brownCards: 2,
+            blueCards: 1,
+        },
+        thirdStage: {
+            greenCards: 2,
+            brownCards: 4,
+            blueCards: 0,
+        },
     },]
 
 const cardsDataGreen = [
@@ -366,7 +423,9 @@ const cardsDataBlue = [
     },
 ];
 
-const removeClassAnicents = () => {
+// Add/remove elements on click, event listeners //
+
+const removeClassAncients = () => {
     for (let item of allAncientCards) {
         item.classList.remove('active-ancient')
     }
@@ -375,15 +434,6 @@ const removeClassAnicents = () => {
 const chooseAncient = (e) => {
     e.target.classList.add('active-ancient')
 };
-
-const showDifficulties = () => {
-    difficultyButtonsContainer.classList.remove('not-active');
-}
-
-ancientsCardsContainer.addEventListener('click', removeClassAnicents,);
-ancientsCardsContainer.addEventListener('click', chooseAncient);
-ancientsCardsContainer.addEventListener('click', showDifficulties);
-
 
 const removeClassDifficulty = () => {
     for (let item of allDifficultiesButtons) {
@@ -395,6 +445,9 @@ const chooseDifficulty = (e) => {
     e.target.classList.add('difficulty-active')
 };
 
+ancientsCardsContainer.addEventListener('click', removeClassAncients);
+ancientsCardsContainer.addEventListener('click', chooseAncient);
+ancientsCardsContainer.addEventListener('click', () => { difficultyButtonsContainer.classList.remove('not-active') });
 difficultyButtonsContainer.addEventListener('click', removeClassDifficulty,);
 difficultyButtonsContainer.addEventListener('click', chooseDifficulty);
 difficultyButtonsContainer.addEventListener('click', () => { shuffleButton.classList.remove('not-active-display-none') });
@@ -402,159 +455,193 @@ difficultyButtonsContainer.addEventListener('click', () => { rightPart.classList
 shuffleButton.addEventListener('click', () => { rightPart.classList.remove('not-active-display-none') });
 shuffleButton.addEventListener('click', () => { shuffleButton.classList.add('not-active-display-none') });
 
-// Количество карт Древнего для каждой стадии //
-const n1Green = ancientsData[0].firstStage.greenCards;
-const n1Brown = ancientsData[0].firstStage.brownCards;
-const n1Blue = ancientsData[0].firstStage.blueCards;
-const n2Green = ancientsData[0].secondStage.greenCards;
-const n2Brown = ancientsData[0].secondStage.brownCards;
-const n2Blue = ancientsData[0].secondStage.blueCards;
-const n3Green = ancientsData[0].thirdStage.greenCards;
-const n3Brown = ancientsData[0].thirdStage.brownCards;
-const n3Blue = ancientsData[0].thirdStage.blueCards;
-const n2GreenAcc = n1Green + ancientsData[0].secondStage.greenCards;
-const n2BrownAcc = n1Brown + ancientsData[0].secondStage.brownCards;
-const n2BlueAcc = n1Blue + ancientsData[0].secondStage.blueCards;
-const n3GreenAcc = n2GreenAcc + ancientsData[0].thirdStage.greenCards;
-const n3BrownAcc = n2BrownAcc + ancientsData[0].thirdStage.brownCards;
-const n3BlueAcc = n2BlueAcc + ancientsData[0].thirdStage.blueCards;
 
-// Текст в индикаторах колоды //
-let textContentGreenOne = n1Green;
-let textContentBrownOne = n1Brown;
-let textContentBlueOne = n1Blue;
-let textContentGreenTwo = n2GreenAcc - n1Green;
-let textContentBrownTwo = n2BrownAcc - n1Brown;
-let textContentBlueTwo = n2BlueAcc - n1Blue;
-let textContentGreenThree = n3GreenAcc - n2GreenAcc;
-let textContentBrownThree = n3BrownAcc - n2BrownAcc;
-let textContentBlueThree = n3BlueAcc - n2BlueAcc;
-
+// Shuffle-function //
 const shuffleArray = (array) => {
     return array.sort(() => 0.5 - Math.random());
 };
 
-// Отсортированные по сложности карты //
-let withoutEasyGreen = cardsDataGreen.filter(item => item.difficulty !== 'easy');
-let withoutEasyBrown = cardsDataBrown.filter(item => item.difficulty !== 'easy');
-let withoutEasyBlue = cardsDataBlue.filter(item => item.difficulty !== 'easy');
-let withoutHardGreen = cardsDataGreen.filter(item => item.difficulty !== 'hard');
-let withoutHardBrown = cardsDataBrown.filter(item => item.difficulty !== 'hard');
-let withoutHardBlue = cardsDataBlue.filter(item => item.difficulty !== 'hard');
-let easyGreen = cardsDataGreen.filter(item => item.difficulty === 'easy');
-let easyBrown = cardsDataBrown.filter(item => item.difficulty === 'easy');
-let easyBlue = cardsDataBlue.filter(item => item.difficulty === 'easy');
-let normalGreen = cardsDataGreen.filter(item => item.difficulty === 'normal');
-let normalBrown = cardsDataBrown.filter(item => item.difficulty === 'normal');
-let normalBlue = cardsDataBlue.filter(item => item.difficulty === 'normal');
-let hardGreen = cardsDataGreen.filter(item => item.difficulty === 'hard');
-let hardBrown = cardsDataBrown.filter(item => item.difficulty === 'hard');
-let hardBlue = cardsDataBlue.filter(item => item.difficulty === 'hard');
-let forVeryEasyGreen = [...easyGreen, ...shuffleArray(normalGreen).slice(0, n3GreenAcc - easyGreen.length)];
-let forVeryEasyBrown = [...easyBrown, ...shuffleArray(normalBrown).slice(0, n3BrownAcc - easyBrown.length)];
-let forVeryEasyBlue = [...easyBlue, ...shuffleArray(normalBlue).slice(0, n3BlueAcc - easyBlue.length)];
-let forVeryHardGreen = [...hardGreen, ...shuffleArray(normalGreen).slice(0, n3GreenAcc - hardGreen.length)];
-let forVeryHardBrown = [...hardBrown, ...shuffleArray(normalBrown).slice(0, n3BrownAcc - hardBrown.length)];
-let forVeryHardBlue = [...hardBlue, ...shuffleArray(normalBlue).slice(0, n3BlueAcc - hardBlue.length)];
+// Variables //
+let ancientNumber;
+let n1Green;
+let n2Green;
+let n3Green;
+let n1Brown;
+let n2Brown;
+let n3Brown;
+let n1Blue;
+let n2Blue;
+let n3Blue;
+let n2GreenAcc;
+let n3GreenAcc;
+let n2BrownAcc;
+let n3BrownAcc;
+let n2BlueAcc;
+let n3BlueAcc;
+let withoutEasyGreen;
+let withoutEasyBrown;
+let withoutEasyBlue;
+let withoutHardGreen;
+let withoutHardBrown;
+let withoutHardBlue;
+let easyGreen;
+let easyBrown;
+let easyBlue;
+let normalGreen;
+let normalBrown;
+let normalBlue;
+let hardGreen;
+let hardBrown;
+let hardBlue;
+let forVeryEasyGreen;
+let forVeryEasyBrown;
+let forVeryEasyBlue;
+let forVeryHardGreen;
+let forVeryHardBrown;
+let forVeryHardBlue;
+let textContentGreenOne;
+let textContentBrownOne;
+let textContentBlueOne;
+let textContentGreenTwo;
+let textContentBrownTwo;
+let textContentBlueTwo;
+let textContentGreenThree;
+let textContentBrownThree;
+let textContentBlueThree;
+
+const setCardTracker = () => {
+    dotGreenOne.textContent = textContentGreenOne;
+    dotBrownOne.textContent = textContentBrownOne;
+    dotBlueOne.textContent = textContentBlueOne;
+    dotGreenTwo.textContent = textContentGreenTwo;
+    dotBrownTwo.textContent = textContentBrownTwo;
+    dotBlueTwo.textContent = textContentBlueTwo;
+    dotGreenThree.textContent = textContentGreenThree;
+    dotBrownThree.textContent = textContentBrownThree;
+    dotBlueThree.textContent = textContentBlueThree;
+};
+
+shuffleButton.addEventListener('click', setCardTracker);
+
+const chooseAncientNumber = () => {
+    ancientsCardsContainer.addEventListener('click', (el) => {
+        if (el.target.classList.contains('azathoth')) {
+            ancientNumber = 0;
+        }
+        else if (el.target.classList.contains('cthulthu')) {
+            ancientNumber = 1;
+        }
+        else if (el.target.classList.contains('iogSothoth')) {
+            ancientNumber = 2;
+        }
+        else if (el.target.classList.contains('shubNiggurath')) {
+            ancientNumber = 3;
+        }
+
+        // Number of cards for Ancients for every stage //
+        n1Green = ancientsData[ancientNumber].firstStage.greenCards;
+        n1Brown = ancientsData[ancientNumber].firstStage.brownCards;
+        n1Blue = ancientsData[ancientNumber].firstStage.blueCards;
+        n2Green = ancientsData[ancientNumber].secondStage.greenCards;
+        n2Brown = ancientsData[ancientNumber].secondStage.brownCards;
+        n2Blue = ancientsData[ancientNumber].secondStage.blueCards;
+        n3Green = ancientsData[ancientNumber].thirdStage.greenCards;
+        n3Brown = ancientsData[ancientNumber].thirdStage.brownCards;
+        n3Blue = ancientsData[ancientNumber].thirdStage.blueCards;
+        n2GreenAcc = n1Green + ancientsData[ancientNumber].secondStage.greenCards;
+        n2BrownAcc = n1Brown + ancientsData[ancientNumber].secondStage.brownCards;
+        n2BlueAcc = n1Blue + ancientsData[ancientNumber].secondStage.blueCards;
+        n3GreenAcc = n2GreenAcc + ancientsData[ancientNumber].thirdStage.greenCards;
+        n3BrownAcc = n2BrownAcc + ancientsData[ancientNumber].thirdStage.brownCards;
+        n3BlueAcc = n2BlueAcc + ancientsData[ancientNumber].thirdStage.blueCards;
+
+        // Sort card arrays by difficulty //
+        withoutEasyGreen = cardsDataGreen.filter(item => item.difficulty !== 'easy');
+        withoutEasyBrown = cardsDataBrown.filter(item => item.difficulty !== 'easy');
+        withoutEasyBlue = cardsDataBlue.filter(item => item.difficulty !== 'easy');
+        withoutHardGreen = cardsDataGreen.filter(item => item.difficulty !== 'hard');
+        withoutHardBrown = cardsDataBrown.filter(item => item.difficulty !== 'hard');
+        withoutHardBlue = cardsDataBlue.filter(item => item.difficulty !== 'hard');
+        easyGreen = cardsDataGreen.filter(item => item.difficulty === 'easy');
+        easyBrown = cardsDataBrown.filter(item => item.difficulty === 'easy');
+        easyBlue = cardsDataBlue.filter(item => item.difficulty === 'easy');
+        normalGreen = cardsDataGreen.filter(item => item.difficulty === 'normal');
+        normalBrown = cardsDataBrown.filter(item => item.difficulty === 'normal');
+        normalBlue = cardsDataBlue.filter(item => item.difficulty === 'normal');
+        hardGreen = cardsDataGreen.filter(item => item.difficulty === 'hard');
+        hardBrown = cardsDataBrown.filter(item => item.difficulty === 'hard');
+        hardBlue = cardsDataBlue.filter(item => item.difficulty === 'hard');
+        forVeryEasyGreen = [...easyGreen, ...shuffleArray(normalGreen).slice(0, n3GreenAcc - easyGreen.length)];
+        forVeryEasyBrown = [...easyBrown, ...shuffleArray(normalBrown).slice(0, n3BrownAcc - easyBrown.length)];
+        forVeryEasyBlue = [...easyBlue, ...shuffleArray(normalBlue).slice(0, n3BlueAcc - easyBlue.length)];
+        forVeryHardGreen = [...hardGreen, ...shuffleArray(normalGreen).slice(0, n3GreenAcc - hardGreen.length)];
+        forVeryHardBrown = [...hardBrown, ...shuffleArray(normalBrown).slice(0, n3BrownAcc - hardBrown.length)];
+        forVeryHardBlue = [...hardBlue, ...shuffleArray(normalBlue).slice(0, n3BlueAcc - hardBlue.length)]
+
+        textContentGreenOne = n1Green;
+        textContentBrownOne = n1Brown;
+        textContentBlueOne = n1Blue;
+        textContentGreenTwo = n2Green;
+        textContentBrownTwo = n2Brown;
+        textContentBlueTwo = n2Blue;
+        textContentGreenThree = n3Green;
+        textContentBrownThree = n3Brown;
+        textContentBlueThree = n3Blue;
+    })
+};
+chooseAncientNumber();
+
+// Number cards for Ancients for every stage //
+
+
+
+
+// Cards sorted by diffciculty //
+const sortCardsByDifficulty = () => {
+};
+
+//FUNCTIONS//
+
+// Shuffling cards arrays for every difficulty //
+
+let greenArrayShuffled;
+let brownArrayShuffled;
+let blueArrayShuffled;
 
 const finalDeckVeryEasyFunction = () => {
-    const greenArrayShuffled = shuffleArray(forVeryEasyGreen);
-    const brownArrayShuffled = shuffleArray(forVeryEasyBrown);
-    const blueArrayShuffled = shuffleArray(forVeryEasyBlue);
-
-    const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
-    const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
-    const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
-    const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
-    const finalDeckOneShuffled = shuffleArray(finalDeckOne);
-    const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2GreenAcc);
-    const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2BrownAcc);
-    const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2BlueAcc);
-    const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
-    const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
-    const finalDeckGreenThree = greenArrayShuffled.slice(n2GreenAcc, n3GreenAcc);
-    const finalDeckBrownThree = brownArrayShuffled.slice(n2BrownAcc, n3BrownAcc);
-    const finalDeckBlueThree = blueArrayShuffled.slice(n2BlueAcc, n3BlueAcc);
-    const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
-    const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
-    const finalDeckVeryEasy = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
-    return finalDeckVeryEasy;
-}
-
+    greenArrayShuffled = shuffleArray(forVeryEasyGreen);
+    brownArrayShuffled = shuffleArray(forVeryEasyBrown);
+    blueArrayShuffled = shuffleArray(forVeryEasyBlue);
+    return finalDeckForThisDifficulty();
+};
 const finalDeckEasyFunction = () => {
-    const greenArrayShuffled = shuffleArray(withoutHardGreen);
-    const brownArrayShuffled = shuffleArray(withoutHardBrown);
-    const blueArrayShuffled = shuffleArray(withoutHardBlue);
-
-    const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
-    const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
-    const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
-    const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
-    const finalDeckOneShuffled = shuffleArray(finalDeckOne);
-    const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2GreenAcc);
-    const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2BrownAcc);
-    const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2BlueAcc);
-    const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
-    const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
-    const finalDeckGreenThree = greenArrayShuffled.slice(n2GreenAcc, n3GreenAcc);
-    const finalDeckBrownThree = brownArrayShuffled.slice(n2BrownAcc, n3BrownAcc);
-    const finalDeckBlueThree = blueArrayShuffled.slice(n2BlueAcc, n3BlueAcc);
-    const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
-    const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
-    const finalDeckEasy = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
-    return finalDeckEasy;
+    greenArrayShuffled = shuffleArray(withoutHardGreen);
+    brownArrayShuffled = shuffleArray(withoutHardBrown);
+    blueArrayShuffled = shuffleArray(withoutHardBlue);
+    return finalDeckForThisDifficulty();
 };
 const finalDeckNormalFunction = () => {
-    const greenArrayShuffled = shuffleArray(cardsDataGreen);
-    const brownArrayShuffled = shuffleArray(cardsDataBrown);
-    const blueArrayShuffled = shuffleArray(cardsDataBlue);
-
-    const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
-    const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
-    const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
-    const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
-    const finalDeckOneShuffled = shuffleArray(finalDeckOne);
-    const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2GreenAcc);
-    const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2BrownAcc);
-    const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2BlueAcc);
-    const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
-    const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
-    const finalDeckGreenThree = greenArrayShuffled.slice(n2GreenAcc, n3GreenAcc);
-    const finalDeckBrownThree = brownArrayShuffled.slice(n2BrownAcc, n3BrownAcc);
-    const finalDeckBlueThree = blueArrayShuffled.slice(n2BlueAcc, n3BlueAcc);
-    const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
-    const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
-    const finalDeckNormal = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
-    return finalDeckNormal;
+    greenArrayShuffled = shuffleArray(cardsDataGreen);
+    brownArrayShuffled = shuffleArray(cardsDataBrown);
+    blueArrayShuffled = shuffleArray(cardsDataBlue);
+    return finalDeckForThisDifficulty();
 };
 const finalDeckHardFunction = () => {
-    const greenArrayShuffled = shuffleArray(withoutEasyGreen);
-    const brownArrayShuffled = shuffleArray(withoutEasyBrown);
-    const blueArrayShuffled = shuffleArray(withoutEasyBlue);
-
-    const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
-    const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
-    const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
-    const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
-    const finalDeckOneShuffled = shuffleArray(finalDeckOne);
-    const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2GreenAcc);
-    const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2BrownAcc);
-    const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2BlueAcc);
-    const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
-    const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
-    const finalDeckGreenThree = greenArrayShuffled.slice(n2GreenAcc, n3GreenAcc);
-    const finalDeckBrownThree = brownArrayShuffled.slice(n2BrownAcc, n3BrownAcc);
-    const finalDeckBlueThree = blueArrayShuffled.slice(n2BlueAcc, n3BlueAcc);
-    const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
-    const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
-    const finalDeckHard = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
-    return finalDeckHard
+    greenArrayShuffled = shuffleArray(withoutEasyGreen);
+    brownArrayShuffled = shuffleArray(withoutEasyBrown);
+    blueArrayShuffled = shuffleArray(withoutEasyBlue);
+    return finalDeckForThisDifficulty();
 };
 const finalDeckVeryHardFunction = () => {
-    const greenArrayShuffled = shuffleArray(forVeryHardGreen);
-    const brownArrayShuffled = shuffleArray(forVeryHardBrown);
-    const blueArrayShuffled = shuffleArray(forVeryHardBlue);
+    greenArrayShuffled = shuffleArray(forVeryHardGreen);
+    brownArrayShuffled = shuffleArray(forVeryHardBrown);
+    blueArrayShuffled = shuffleArray(forVeryHardBlue);
+    return finalDeckForThisDifficulty();
+};
 
+// Calling a shuffle function depending on difficulty button click //
+let finalDeck;
+const finalDeckForThisDifficulty = () => {
     const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
     const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
     const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
@@ -570,10 +657,9 @@ const finalDeckVeryHardFunction = () => {
     const finalDeckBlueThree = blueArrayShuffled.slice(n2BlueAcc, n3BlueAcc);
     const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
     const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
-    const finalDeckVeryHard = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
-    return finalDeckVeryHard;
-}
-let finalDeck;
+    const finalDeck = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
+    return finalDeck;
+};
 
 function getArray() {
     difficultyButtonsContainer.addEventListener('click', (e) => {
@@ -588,17 +674,22 @@ function getArray() {
         } else if (e.target.classList.contains('very-hard')) {
             finalDeck = finalDeckVeryHardFunction();
         }
-        console.log(finalDeck);
+        console.log(finalDeck)
+
+        console.log(finalDeck.forEach((item => { console.log(item.color, item.difficulty) })));
     })
+
 };
 getArray();
 
+// Last card background function //
 let deckImgNumber = -1;
 const setCardBg = () => {
     lastCard.style.backgroundSize = 'cover';
     lastCard.style.backgroundImage = `url(${(finalDeck[deckImgNumber].cardFace)})`;
 }
 
+// Next last card on click //
 const showNextCard = () => {
     if (deckImgNumber < finalDeck.length - 1) {
         deckImgNumber++
@@ -608,19 +699,15 @@ const showNextCard = () => {
     setCardBg();
 };
 
-const setCardTracker = () => {
-    dotGreenOne.textContent = textContentGreenOne;
-    dotBrownOne.textContent = textContentBrownOne;
-    dotBlueOne.textContent = textContentBlueOne;
-    dotGreenTwo.textContent = textContentGreenTwo;
-    dotBrownTwo.textContent = textContentBrownTwo;
-    dotBlueTwo.textContent = textContentBlueTwo;
-    dotGreenThree.textContent = textContentGreenThree;
-    dotBrownThree.textContent = textContentBrownThree;
-    dotBlueThree.textContent = textContentBlueThree;
-};
-setCardTracker();
+// Deck tracker indicators //
+// Deck tracker indicators text //
 
+
+
+
+
+
+// Deck tracker stages text showing the stage is done //
 const stageOneTextDone = () => {
     if (textContentGreenOne === 0 && textContentBrownOne === 0 && textContentBlueOne === 0) {
         stageTextOne.classList.add('stage-text-done')
@@ -637,12 +724,14 @@ const stageThreeTextDone = () => {
     }
 };
 
+// Last card dissappering after deck is over //
 const lastCardShow = () => {
     if (deckImgNumber === (finalDeck.length - 1)) {
         deck.classList.add('not-active')
     }
 }
 
+// Deck tracker function //
 const changeCardTracker = () => {
 
     if (deckImgNumber < (n1Green + n1Blue + n1Brown)) {
@@ -653,7 +742,7 @@ const changeCardTracker = () => {
         } else if (finalDeck[deckImgNumber].color === 'blue') {
             textContentBlueOne--
         }
-    } else if (deckImgNumber < (n1Green + n1Blue + n1Brown + n2Green + n2Blue + n2Brown)) {
+    } else if (deckImgNumber < (n2GreenAcc + n2BlueAcc + n2BrownAcc)) {
         if (finalDeck[deckImgNumber].color === 'green') {
             textContentGreenTwo--
         } else if (finalDeck[deckImgNumber].color === 'brown') {
@@ -662,7 +751,7 @@ const changeCardTracker = () => {
             textContentBlueTwo--
         }
     } else if
-        (deckImgNumber < ((n1Green + n1Blue + n1Brown) + (n2Green + n2Blue + n2Brown) + (n3Green + n3Blue + n3Brown))) {
+        (deckImgNumber < (n3GreenAcc + n3BlueAcc + n3BrownAcc)) {
         if (finalDeck[deckImgNumber].color === 'green') {
             textContentGreenThree--
         } else if (finalDeck[deckImgNumber].color === 'brown') {
