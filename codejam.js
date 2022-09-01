@@ -402,42 +402,196 @@ difficultyButtonsContainer.addEventListener('click', () => { rightPart.classList
 shuffleButton.addEventListener('click', () => { rightPart.classList.remove('not-active-display-none') });
 shuffleButton.addEventListener('click', () => { shuffleButton.classList.add('not-active-display-none') });
 
+// Количество карт Древнего для каждой стадии //
 const n1Green = ancientsData[0].firstStage.greenCards;
 const n1Brown = ancientsData[0].firstStage.brownCards;
 const n1Blue = ancientsData[0].firstStage.blueCards;
-const n2Green = n1Green + ancientsData[0].secondStage.greenCards;
-const n2Brown = n1Brown + ancientsData[0].secondStage.brownCards;
-const n2Blue = n1Blue + ancientsData[0].secondStage.blueCards;
-const n3Green = n2Green + ancientsData[0].thirdStage.greenCards;
-const n3Brown = n2Brown + ancientsData[0].thirdStage.brownCards;
-const n3Blue = n2Blue + ancientsData[0].thirdStage.blueCards;
+const n2Green = ancientsData[0].secondStage.greenCards;
+const n2Brown = ancientsData[0].secondStage.brownCards;
+const n2Blue = ancientsData[0].secondStage.blueCards;
+const n3Green = ancientsData[0].thirdStage.greenCards;
+const n3Brown = ancientsData[0].thirdStage.brownCards;
+const n3Blue = ancientsData[0].thirdStage.blueCards;
+const n2GreenAcc = n1Green + ancientsData[0].secondStage.greenCards;
+const n2BrownAcc = n1Brown + ancientsData[0].secondStage.brownCards;
+const n2BlueAcc = n1Blue + ancientsData[0].secondStage.blueCards;
+const n3GreenAcc = n2GreenAcc + ancientsData[0].thirdStage.greenCards;
+const n3BrownAcc = n2BrownAcc + ancientsData[0].thirdStage.brownCards;
+const n3BlueAcc = n2BlueAcc + ancientsData[0].thirdStage.blueCards;
+
+// Текст в индикаторах колоды //
+let textContentGreenOne = n1Green;
+let textContentBrownOne = n1Brown;
+let textContentBlueOne = n1Blue;
+let textContentGreenTwo = n2GreenAcc - n1Green;
+let textContentBrownTwo = n2BrownAcc - n1Brown;
+let textContentBlueTwo = n2BlueAcc - n1Blue;
+let textContentGreenThree = n3GreenAcc - n2GreenAcc;
+let textContentBrownThree = n3BrownAcc - n2BrownAcc;
+let textContentBlueThree = n3BlueAcc - n2BlueAcc;
 
 const shuffleArray = (array) => {
     return array.sort(() => 0.5 - Math.random());
 };
 
-const greenArrayShuffled = shuffleArray(cardsDataGreen);
-const brownArrayShuffled = shuffleArray(cardsDataBrown);
-const blueArrayShuffled = shuffleArray(cardsDataBlue);
+// Отсортированные по сложности карты //
+let withoutEasyGreen = cardsDataGreen.filter(item => item.difficulty !== 'easy');
+let withoutEasyBrown = cardsDataBrown.filter(item => item.difficulty !== 'easy');
+let withoutEasyBlue = cardsDataBlue.filter(item => item.difficulty !== 'easy');
+let withoutHardGreen = cardsDataGreen.filter(item => item.difficulty !== 'hard');
+let withoutHardBrown = cardsDataBrown.filter(item => item.difficulty !== 'hard');
+let withoutHardBlue = cardsDataBlue.filter(item => item.difficulty !== 'hard');
+let easyGreen = cardsDataGreen.filter(item => item.difficulty === 'easy');
+let easyBrown = cardsDataBrown.filter(item => item.difficulty === 'easy');
+let easyBlue = cardsDataBlue.filter(item => item.difficulty === 'easy');
+let normalGreen = cardsDataGreen.filter(item => item.difficulty === 'normal');
+let normalBrown = cardsDataBrown.filter(item => item.difficulty === 'normal');
+let normalBlue = cardsDataBlue.filter(item => item.difficulty === 'normal');
+let hardGreen = cardsDataGreen.filter(item => item.difficulty === 'hard');
+let hardBrown = cardsDataBrown.filter(item => item.difficulty === 'hard');
+let hardBlue = cardsDataBlue.filter(item => item.difficulty === 'hard');
+let forVeryEasyGreen = [...easyGreen, ...shuffleArray(normalGreen).slice(0, n3GreenAcc - easyGreen.length)];
+let forVeryEasyBrown = [...easyBrown, ...shuffleArray(normalBrown).slice(0, n3BrownAcc - easyBrown.length)];
+let forVeryEasyBlue = [...easyBlue, ...shuffleArray(normalBlue).slice(0, n3BlueAcc - easyBlue.length)];
+let forVeryHardGreen = [...hardGreen, ...shuffleArray(normalGreen).slice(0, n3GreenAcc - hardGreen.length)];
+let forVeryHardBrown = [...hardBrown, ...shuffleArray(normalBrown).slice(0, n3BrownAcc - hardBrown.length)];
+let forVeryHardBlue = [...hardBlue, ...shuffleArray(normalBlue).slice(0, n3BlueAcc - hardBlue.length)];
 
+const finalDeckVeryEasyFunction = () => {
+    const greenArrayShuffled = shuffleArray(forVeryEasyGreen);
+    const brownArrayShuffled = shuffleArray(forVeryEasyBrown);
+    const blueArrayShuffled = shuffleArray(forVeryEasyBlue);
 
-const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
-const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
-const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
-const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
-const finalDeckOneShuffled = shuffleArray(finalDeckOne);
-const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2Green);
-const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2Brown);
-const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2Blue);
-const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
-const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
-const finalDeckGreenThree = greenArrayShuffled.slice(n2Green, n3Green);
-const finalDeckBrownThree = brownArrayShuffled.slice(n2Brown, n3Brown);
-const finalDeckBlueThree = blueArrayShuffled.slice(n2Blue, n3Blue);
-const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
-const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
-const finalDeck = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
+    const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
+    const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
+    const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
+    const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
+    const finalDeckOneShuffled = shuffleArray(finalDeckOne);
+    const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2GreenAcc);
+    const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2BrownAcc);
+    const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2BlueAcc);
+    const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
+    const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
+    const finalDeckGreenThree = greenArrayShuffled.slice(n2GreenAcc, n3GreenAcc);
+    const finalDeckBrownThree = brownArrayShuffled.slice(n2BrownAcc, n3BrownAcc);
+    const finalDeckBlueThree = blueArrayShuffled.slice(n2BlueAcc, n3BlueAcc);
+    const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
+    const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
+    const finalDeckVeryEasy = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
+    return finalDeckVeryEasy;
+}
 
+const finalDeckEasyFunction = () => {
+    const greenArrayShuffled = shuffleArray(withoutHardGreen);
+    const brownArrayShuffled = shuffleArray(withoutHardBrown);
+    const blueArrayShuffled = shuffleArray(withoutHardBlue);
+
+    const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
+    const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
+    const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
+    const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
+    const finalDeckOneShuffled = shuffleArray(finalDeckOne);
+    const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2GreenAcc);
+    const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2BrownAcc);
+    const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2BlueAcc);
+    const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
+    const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
+    const finalDeckGreenThree = greenArrayShuffled.slice(n2GreenAcc, n3GreenAcc);
+    const finalDeckBrownThree = brownArrayShuffled.slice(n2BrownAcc, n3BrownAcc);
+    const finalDeckBlueThree = blueArrayShuffled.slice(n2BlueAcc, n3BlueAcc);
+    const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
+    const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
+    const finalDeckEasy = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
+    return finalDeckEasy;
+};
+const finalDeckNormalFunction = () => {
+    const greenArrayShuffled = shuffleArray(cardsDataGreen);
+    const brownArrayShuffled = shuffleArray(cardsDataBrown);
+    const blueArrayShuffled = shuffleArray(cardsDataBlue);
+
+    const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
+    const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
+    const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
+    const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
+    const finalDeckOneShuffled = shuffleArray(finalDeckOne);
+    const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2GreenAcc);
+    const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2BrownAcc);
+    const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2BlueAcc);
+    const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
+    const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
+    const finalDeckGreenThree = greenArrayShuffled.slice(n2GreenAcc, n3GreenAcc);
+    const finalDeckBrownThree = brownArrayShuffled.slice(n2BrownAcc, n3BrownAcc);
+    const finalDeckBlueThree = blueArrayShuffled.slice(n2BlueAcc, n3BlueAcc);
+    const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
+    const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
+    const finalDeckNormal = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
+    return finalDeckNormal;
+};
+const finalDeckHardFunction = () => {
+    const greenArrayShuffled = shuffleArray(withoutEasyGreen);
+    const brownArrayShuffled = shuffleArray(withoutEasyBrown);
+    const blueArrayShuffled = shuffleArray(withoutEasyBlue);
+
+    const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
+    const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
+    const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
+    const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
+    const finalDeckOneShuffled = shuffleArray(finalDeckOne);
+    const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2GreenAcc);
+    const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2BrownAcc);
+    const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2BlueAcc);
+    const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
+    const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
+    const finalDeckGreenThree = greenArrayShuffled.slice(n2GreenAcc, n3GreenAcc);
+    const finalDeckBrownThree = brownArrayShuffled.slice(n2BrownAcc, n3BrownAcc);
+    const finalDeckBlueThree = blueArrayShuffled.slice(n2BlueAcc, n3BlueAcc);
+    const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
+    const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
+    const finalDeckHard = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
+    return finalDeckHard
+};
+const finalDeckVeryHardFunction = () => {
+    const greenArrayShuffled = shuffleArray(forVeryHardGreen);
+    const brownArrayShuffled = shuffleArray(forVeryHardBrown);
+    const blueArrayShuffled = shuffleArray(forVeryHardBlue);
+
+    const finalDeckGreenOne = greenArrayShuffled.slice(0, n1Green);
+    const finalDeckBrownOne = brownArrayShuffled.slice(0, n1Brown);
+    const finalDeckBlueOne = blueArrayShuffled.slice(0, n1Blue);
+    const finalDeckOne = [...finalDeckGreenOne, ...finalDeckBrownOne, ...finalDeckBlueOne];
+    const finalDeckOneShuffled = shuffleArray(finalDeckOne);
+    const finalDeckGreenTwo = greenArrayShuffled.slice(n1Green, n2GreenAcc);
+    const finalDeckBrownTwo = brownArrayShuffled.slice(n1Brown, n2BrownAcc);
+    const finalDeckBlueTwo = blueArrayShuffled.slice(n1Blue, n2BlueAcc);
+    const finalDeckTwo = [...finalDeckGreenTwo, ...finalDeckBrownTwo, ...finalDeckBlueTwo];
+    const finalDeckTwoShuffled = shuffleArray(finalDeckTwo);
+    const finalDeckGreenThree = greenArrayShuffled.slice(n2GreenAcc, n3GreenAcc);
+    const finalDeckBrownThree = brownArrayShuffled.slice(n2BrownAcc, n3BrownAcc);
+    const finalDeckBlueThree = blueArrayShuffled.slice(n2BlueAcc, n3BlueAcc);
+    const finalDeckThree = [...finalDeckGreenThree, ...finalDeckBrownThree, ...finalDeckBlueThree];
+    const finalDeckThreeShuffled = shuffleArray(finalDeckThree);
+    const finalDeckVeryHard = [...finalDeckOneShuffled, ...finalDeckTwoShuffled, ...finalDeckThreeShuffled];
+    return finalDeckVeryHard;
+}
+let finalDeck;
+
+function getArray() {
+    difficultyButtonsContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('normal')) {
+            finalDeck = finalDeckNormalFunction();
+        } else if (e.target.classList.contains('easy')) {
+            finalDeck = finalDeckEasyFunction();
+        } else if (e.target.classList.contains('hard')) {
+            finalDeck = finalDeckHardFunction();
+        } else if (e.target.classList.contains('very-easy')) {
+            finalDeck = finalDeckVeryEasyFunction();
+        } else if (e.target.classList.contains('very-hard')) {
+            finalDeck = finalDeckVeryHardFunction();
+        }
+        console.log(finalDeck);
+    })
+};
+getArray();
 
 let deckImgNumber = -1;
 const setCardBg = () => {
@@ -454,16 +608,6 @@ const showNextCard = () => {
     setCardBg();
 };
 
-let textContentGreenOne = n1Green;
-let textContentBrownOne = n1Brown;
-let textContentBlueOne = n1Blue;
-let textContentGreenTwo = n2Green - n1Green;
-let textContentBrownTwo = n2Brown - n1Brown;
-let textContentBlueTwo = n2Blue - n1Blue;
-let textContentGreenThree = n3Green - n2Green;
-let textContentBrownThree = n3Brown - n2Brown;
-let textContentBlueThree = n3Blue - n2Blue;
-
 const setCardTracker = () => {
     dotGreenOne.textContent = textContentGreenOne;
     dotBrownOne.textContent = textContentBrownOne;
@@ -475,7 +619,6 @@ const setCardTracker = () => {
     dotBrownThree.textContent = textContentBrownThree;
     dotBlueThree.textContent = textContentBlueThree;
 };
-
 setCardTracker();
 
 const stageOneTextDone = () => {
@@ -491,7 +634,6 @@ const stageTwoTextDone = () => {
 const stageThreeTextDone = () => {
     if (textContentGreenThree === 0 && textContentBrownThree === 0 && textContentBlueThree === 0) {
         stageTextThree.classList.add('stage-text-done');
-
     }
 };
 
@@ -503,7 +645,7 @@ const lastCardShow = () => {
 
 const changeCardTracker = () => {
 
-    if (deckImgNumber < finalDeckOneShuffled.length) {
+    if (deckImgNumber < (n1Green + n1Blue + n1Brown)) {
         if (finalDeck[deckImgNumber].color === 'green') {
             textContentGreenOne--
         } else if (finalDeck[deckImgNumber].color === 'brown') {
@@ -511,7 +653,7 @@ const changeCardTracker = () => {
         } else if (finalDeck[deckImgNumber].color === 'blue') {
             textContentBlueOne--
         }
-    } else if (deckImgNumber < (finalDeckOneShuffled.length + finalDeckTwoShuffled.length)) {
+    } else if (deckImgNumber < (n1Green + n1Blue + n1Brown + n2Green + n2Blue + n2Brown)) {
         if (finalDeck[deckImgNumber].color === 'green') {
             textContentGreenTwo--
         } else if (finalDeck[deckImgNumber].color === 'brown') {
@@ -520,7 +662,7 @@ const changeCardTracker = () => {
             textContentBlueTwo--
         }
     } else if
-        (deckImgNumber < (finalDeckOneShuffled.length + finalDeckTwoShuffled.length + finalDeckThreeShuffled.length)) {
+        (deckImgNumber < ((n1Green + n1Blue + n1Brown) + (n2Green + n2Blue + n2Brown) + (n3Green + n3Blue + n3Brown))) {
         if (finalDeck[deckImgNumber].color === 'green') {
             textContentGreenThree--
         } else if (finalDeck[deckImgNumber].color === 'brown') {
@@ -538,4 +680,3 @@ const changeCardTracker = () => {
 
 deck.addEventListener('click', showNextCard);
 deck.addEventListener('click', changeCardTracker);
-console.log(finalDeck);
