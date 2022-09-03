@@ -520,7 +520,6 @@ const setCardTracker = () => {
     dotBrownThree.textContent = textContentBrownThree;
     dotBlueThree.textContent = textContentBlueThree;
 };
-
 shuffleButton.addEventListener('click', setCardTracker);
 
 const chooseAncientNumber = () => {
@@ -578,6 +577,7 @@ const chooseAncientNumber = () => {
         forVeryHardBrown = [...hardBrown, ...shuffleArray(normalBrown).slice(0, n3BrownAcc - hardBrown.length)];
         forVeryHardBlue = [...hardBlue, ...shuffleArray(normalBlue).slice(0, n3BlueAcc - hardBlue.length)]
 
+        // Deck tracker indicators text //
         textContentGreenOne = n1Green;
         textContentBrownOne = n1Brown;
         textContentBlueOne = n1Blue;
@@ -590,11 +590,6 @@ const chooseAncientNumber = () => {
     })
 };
 chooseAncientNumber();
-
-// Number cards for Ancients for every stage //
-
-
-
 
 // Cards sorted by diffciculty //
 const sortCardsByDifficulty = () => {
@@ -675,10 +670,8 @@ function getArray() {
             finalDeck = finalDeckVeryHardFunction();
         }
         console.log(finalDeck)
-
         console.log(finalDeck.forEach((item => { console.log(item.color, item.difficulty) })));
     })
-
 };
 getArray();
 
@@ -699,28 +692,31 @@ const showNextCard = () => {
     setCardBg();
 };
 
-// Deck tracker indicators //
-// Deck tracker indicators text //
-
-
-
-
-
-
 // Deck tracker stages text showing the stage is done //
 const stageOneTextDone = () => {
     if (textContentGreenOne === 0 && textContentBrownOne === 0 && textContentBlueOne === 0) {
-        stageTextOne.classList.add('stage-text-done')
+        stageTextOne.classList.add('stage-text-done');
+        dotGreenOne.style.backgroundColor = "darkgreen";
+        dotBrownOne.style.backgroundColor = "rgb(112, 26, 26)";
+        dotBlueOne.style.backgroundColor = "darkblue";
+
+        console.log('done')
     }
 };
 const stageTwoTextDone = () => {
     if (textContentGreenTwo === 0 && textContentBrownTwo === 0 && textContentBlueTwo === 0) {
         stageTextTwo.classList.add('stage-text-done')
+        dotGreenTwo.style.backgroundColor = "darkgreen";
+        dotBrownTwo.style.backgroundColor = "rgb(112, 26, 26)";
+        dotBlueTwo.style.backgroundColor = "darkblue";
     }
 };
 const stageThreeTextDone = () => {
     if (textContentGreenThree === 0 && textContentBrownThree === 0 && textContentBlueThree === 0) {
         stageTextThree.classList.add('stage-text-done');
+        dotGreenThree.style.backgroundColor = "darkgreen";
+        dotBrownThree.style.backgroundColor = "rgb(112, 26, 26)";
+        dotBlueThree.style.backgroundColor = "darkblue";
     }
 };
 
@@ -733,7 +729,6 @@ const lastCardShow = () => {
 
 // Deck tracker function //
 const changeCardTracker = () => {
-
     if (deckImgNumber < (n1Green + n1Blue + n1Brown)) {
         if (finalDeck[deckImgNumber].color === 'green') {
             textContentGreenOne--

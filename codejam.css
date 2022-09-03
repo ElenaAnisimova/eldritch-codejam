@@ -33,6 +33,7 @@ body {
     cursor: pointer;
     height: 260px;
     width: 200px;
+    border-radius: 15px;
 }
 
 .active-ancient {
@@ -141,27 +142,36 @@ body {
 .dot.green {
     background-color: green;
 }
+.dot-green-done {
+    background-color: rgb(3, 83, 3);
+}
 
 .dot.brown {
     background-color: brown;
 }
-
+.dot-brown-done {
+    background-color: rgb(112, 26, 26);
+}
 .dot.blue {
     background-color: blue;
 }
-
+.dot-blue-done {
+    background-color: darkblue;
+}
 .deck {
     background-image: url(./assets/mythicCardBackground.png);
     background-size: cover;
     height: 190px;
     width: 130px;
     cursor: pointer;
+    border-radius: 15px;
 }
 
 .last-card {
     cursor: pointer;
     height: 190px;
     width: 130px;
+    border-radius: 15px;
 }
 
 .not-active {
